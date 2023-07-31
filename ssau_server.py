@@ -5,10 +5,16 @@ app = Flask(__name__)
 
 attempt = 0
 
+@app.route('/styles/<path:path>')
+def css(path):
+    try:
+        return send_file(f"{path}")
+    except FileNotFoundError:
+        abort(404)
+
 @app.route('/rasp/', methods=['GET'])
 def rasp():
     data = request.args.to_dict()
-    print(data)
     if data == {}:
         return send_file("index.html")
     try:
