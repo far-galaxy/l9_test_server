@@ -18,10 +18,15 @@ def rasp():
     if data == {}:
         return send_file("index.html")
     try:
+        if 'groupId' in data:
+            p = f"shedules/{data['groupId']}"
+        elif 'staffId' in data:
+            p = f"teachers/{data['staffId']}"
+            
         if 'selectedWeek' not in data:
-            return send_file(f"shedules/{data['groupId']}/week_1.html")
+            return send_file(f"{p}/week_1.html")
         else:
-            return send_file(f"shedules/{data['groupId']}/week_{data['selectedWeek']}.html")
+            return send_file(f"{p}/week_{data['selectedWeek']}.html")
     except FileNotFoundError:
         abort(404)
     except KeyError:
