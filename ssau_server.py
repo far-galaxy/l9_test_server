@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import *
+from ssau_downloader import download
 
 app = Flask(__name__)
 
@@ -18,19 +19,32 @@ def rasp():
     if data == {}:
         return send_file("index.html")
     try:
-        if 'groupId' in data:
-            p = f"shedules/{data['groupId']}"
-        elif 'staffId' in data:
-            p = f"teachers/{data['staffId']}"
-            
-        if 'selectedWeek' not in data:
-            return send_file(f"{p}/week_1.html")
-        else:
-            return send_file(f"{p}/week_{data['selectedWeek']}.html")
+        p, week = path(data)
+        return send_file(f"{p}/week_{week}.html")
+        
     except FileNotFoundError:
-        abort(404)
+        ID = data['groupId'] if 'groupId' in data else data['staffId']
+        p, week = path(data)
+        
+        download('groupId' in data, ID, week)
+        try:
+            return send_file(f"{p}/week_{week}.html")
+        except FileNotFoundError:
+            abort(404)
     except KeyError:
         abort(404)
+
+def path(data):
+    if 'groupId' in data:
+        p = f"groups/{data['groupId']}"
+    elif 'staffId' in data:
+        p = f"teachers/{data['staffId']}"
+            
+    if 'selectedWeek' not in data:
+        week = 1
+    else:
+        week = data['selectedWeek']
+    return p, week
 
 @app.route('/rasp/search', methods=['POST'])
 def search():
