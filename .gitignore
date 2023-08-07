@@ -1,3 +1,8 @@
-groups
-teachers
+/groups/*
+!/groups/123
+!/groups/123456789
+!/groups/100000000
+!/groups/111111111
+/teachers/*
+!/teachers/[1-5]
 __pycache__

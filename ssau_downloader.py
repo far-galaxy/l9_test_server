@@ -3,15 +3,21 @@ import requests
 from ast import literal_eval
 import os
 import time
+import ssau_cleaner
 
-groups = (
-    530996168,
-    )
+# Список групп и преподавателей для скачивания
+# (при самостоятельном запуске модуля)
+groups = ()
+teachers = ()
 
-def download(isGroup, ID, week):
+# Скачивание расписания, очистка от лишнего (при желании) и сохранение в файл 
+def download(isGroup, ID, week, clear=False):
     uri = "groupId" if isGroup else "staffId"
     folder = "groups" if isGroup else "teachers"
     site = requests.get(f'https://ssau.ru/rasp?{uri}={ID}&selectedWeek={week}')
+    if site.status_code != 200:
+        print(f'responce {site.status_code}')
+        return
     print(f'Loaded {folder} shedule {ID}, week {week}')
     if not os.path.isdir(f'{folder}/{ID}/'):
         os.makedirs(f'{folder}/{ID}')
@@ -20,6 +26,9 @@ def download(isGroup, ID, week):
     with open(path, 'w', encoding="utf-8") as f:
         f.write(str(site.text))
         print(f"Saved {folder} shedule {ID}, week {week}")
+    if clear:
+        ssau_cleaner.clear(path)
+    # Задержка на всякий случай для защит от ботов
     time.sleep(0.5)
 
 if __name__ == "__main__":

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="csrf-token" content="JCztt9zC5jc1GOVMDAkK5ZLOlvLWOwBWK0ssEiCH" />
+    <title>Самарский университет</title>
+    <meta property="og:image" content="/img/su/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <link rel="stylesheet" href="https://ssau.ru/styles/app.css">
+
+    <!--[if lte IE 8]><style type="text/css">*:first-child+html div.b-yandexbox .b-hint-input { position: absolute; margin-top: 4px !important; } * html div.b-yandexbox .b-hint-input { position: relative; bottom: -0.5em; left: 0.3em; float: left; display: block; margin: 0 0 -1em !important; }</style><![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="d-flex justify-content-center align-items-center" style="display: flex; height: 100vh;">
+
+        <div class="row">
+          <div class="col-md-6 align-items-center justify-content-center" style="display: flex;">
+            <a href="https://ssau.ru"><img src="https://ssau.ru/img/su/logo2.svg" class="img-responsive" alt=""></a>
+          </div>
+
+          <div class="col-md-6 justify-content-center d-flex flex-column">
+
+            <h1 class="text-primary h2" style="font-size: 2.5rem;">Упс. Что-то пошло не так. Но мы уже в курсе.</h1>
+
+            <p class="text-primary" style="font-size: 1.2rem;">Если вы попали сюда случайно, найдите то, что вас интересует и продолжайте исследование сайта.</p>
+
+            <input type="text" class="form-control" style="font-size: 1.2rem; border: 1px #2696ff solid; line-height: 1.5;" id="search" placeholder="например, образовательные программы">
+
+            <p class="mt-5" style='font-size: 1.2rem;'>Если вы считаете, что ошибка произошла по нашей вине, <a href="#" id="report-404" data-toggle="modal" data-target="#modalWindow">напишите нам об этом.</a></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalWindow" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Уведомление об ошибке</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="text" id="error-code" value="500" hidden>
+            <textarea id="error-message" placeholder="Введите ваше сообщение" class="p-2" style="width: 100%; height: 100px;"></textarea>
+            <small class="d-block">Если хотите, чтобы мы оповестили вас о статусе работ, не забудьте указать свой email</small>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id='modalSend'>Отправить</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+        window.Page = {
+          routeName: 'errorPage'
+        };
+    </script>
+
+    <script src="https://ssau.ru/scripts/manifest.js"></script>
+    <script src="https://ssau.ru/scripts/vendor.js"></script>
+    <script src="https://ssau.ru/scripts/app.js"></script>
+  </body>
+</html>

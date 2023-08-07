@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import *
 from ssau_downloader import download
+import json
 
 app = Flask(__name__)
 
@@ -14,6 +15,7 @@ def css(path):
         abort(404)
 
 @app.route('/rasp/', methods=['GET'])
+@app.route('/prod/rasp/', methods=['GET'])
 def rasp():
     data = request.args.to_dict()
     if data == {}:
@@ -57,6 +59,16 @@ def search():
     if attempt == 2:
         attempt = 0
         return "bruh"
+
+results = json.load(open("search.json", "r", encoding='utf-8'))
+@app.route('/prod/rasp/search', methods=['POST'])
+def prod_search():
+    global attempt
+    data = request.values['text']
+    if data in results:
+        return results[data]
+    else:
+        abort(404)
 
         
 if __name__ == "__main__":
