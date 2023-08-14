@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import *
-from ssau_downloader import download
+from ssau_downloader import download, findInRasp
 import json
 
 app = Flask(__name__)
@@ -66,9 +66,9 @@ def prod_search():
     global attempt
     data = request.values['text']
     if data in results:
-        return results[data]
+        return jsonify(results[data])
     else:
-        abort(404)
+        return jsonify(findInRasp(data))
 
         
 if __name__ == "__main__":

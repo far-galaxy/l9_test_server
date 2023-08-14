@@ -4,6 +4,7 @@ from ast import literal_eval
 import os
 import time
 import ssau_cleaner
+from bs4 import BeautifulSoup
 
 # Список групп и преподавателей для скачивания
 # (при самостоятельном запуске модуля)
@@ -30,6 +31,23 @@ def download(isGroup, ID, week, clear=False):
         ssau_cleaner.clear(path)
     # Задержка на всякий случай для защит от ботов
     time.sleep(0.5)
+
+def findInRasp(req):
+    rasp = requests.Session() 
+    rasp.headers['User-Agent'] = 'Mozilla/5.0'
+    hed = rasp.get("https://ssau.ru/rasp/")
+    soup = BeautifulSoup(hed.text, 'lxml')
+    csrf_token = soup.select_one('meta[name="csrf-token"]')['content']
+    time.sleep(0.5)
+    rasp.headers['Accept'] = 'application/json'
+    rasp.headers['X-CSRF-TOKEN'] = csrf_token
+	
+    result = rasp.post("https://ssau.ru/rasp/search", data = {'text':req})
+    if result.status_code == 200:
+        return literal_eval(result.text)
+    else:
+        return []
+
 
 if __name__ == "__main__":
     for groupId in groups:
